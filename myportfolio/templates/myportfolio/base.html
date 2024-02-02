@@ -1,0 +1,477 @@
+<!-- myapp/templates/myapp/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+        integrity="sha384-wv+2ih2Ue9/l3mFiA/AuCBJC1Fr6H3pVaP+HVgVVk5lP5GqOFClBq+x7nW6XgTuD" crossorigin="anonymous">
+    <title>{% block title %}My App{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: #f1f1f1;
+        }
+
+        nav {
+            margin: 0;
+            padding: 0;
+            background-color: #333;
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        nav a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+            text-decoration: none;
+        }
+
+        @media screen and (max-width: 600px) {
+            nav ul {
+                flex-direction: column;
+                display: none;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+        }
+
+        .navbar-toggle {
+            display: none;
+            cursor: pointer;
+            float: right;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+
+        @media screen and (max-width: 600px) {
+            .navbar-toggle {
+                display: block;
+            }
+        }
+
+        .flip-box {
+            background-color: transparent;
+            width: 100%;
+            height: 37vw;
+            border-top: 42px solid #333;
+        }
+
+        .flip-box-inner {
+            width: 100%;
+            height: auto;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-box:hover .flip-box-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-box-front,
+        .flip-box-back {
+            position: absolute;
+            width: 100%;
+            height: auto;
+            backface-visibility: hidden;
+        }
+
+        .flip-box-front img,
+        .flip-box-back img {
+            width: 100%;
+            height: auto;
+        }
+
+        .flip-box-back {
+            transform: rotateY(180deg);
+            color: black;
+        }
+
+
+
+
+
+        #section2 {
+            max-width: 80%;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: rgb(255, 255, 255);
+            color: black;
+
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #ffffff;
+        }
+
+        @media (max-width: 768px) {
+
+            /* Adjust font size for screens with a width up to 768 pixels */
+            p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            /* Adjust font size for screens with a width up to 480 pixels */
+            p {
+                font-size: 0.8rem;
+            }
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+
+
+
+        #section3 {
+            max-width: 80%;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        @media (max-width: 768px) {
+
+            #project {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                flex-direction: column;
+
+
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            #project {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                flex-direction: column;
+
+            }
+        }
+
+        @media (min-width: 769px) {
+
+            #project {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                flex-direction: row;
+
+            }
+        }
+
+
+
+        .card {
+            perspective: 1000px;
+            width: 300px;
+            height: 450px;
+            position: relative;
+            cursor: pointer;
+            margin: 50px 10px 50px 10px;
+            /* Adjusted margin for spacing */
+        }
+
+        .card-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                max-width: 100%;
+                margin: 50px 10px 50px 10px;
+
+                /* Adjusted max-width for smaller screens */
+            }
+        }
+
+        .front,
+        .back {
+            position: absolute;
+
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+            margin: 20px 0;
+        }
+
+        .front {
+            background-color: #3498db;
+            transform: rotateY(0deg);
+            /* Ensure the front is on top */
+        }
+
+        .back {
+            background-color: #2ecc71;
+            transform: rotateY(180deg);
+            padding: 10px;
+            width: 300px;
+            height: 450px;
+        }
+
+        .card:hover .card-content {
+            transform: rotateY(180deg);
+        }
+
+
+
+
+
+
+
+        #section4 {
+            max-width: 80%;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease-in-out;
+            text-align: center;
+        }
+
+        #contactForm {
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        #contactOptions {
+            margin-top: 20px;
+            color: white;
+        }
+
+        #contactOptions p {
+            margin-bottom: 10px;
+        }
+
+        #contactOptions a {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 8px 12px;
+            text-decoration: none;
+            background-color: white;
+            color: black;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        #contactOptions a:hover {
+            background-color: #dfe1e0;
+        }
+
+        footer {
+            background-color: #000000;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 80%;
+            margin: 0 auto;
+        }
+
+        .footer-content p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="navbar-toggle" onclick="toggleNav()">&#9776;</div>
+        <ul>
+            <li><a href="#section1">HOME</a></li>
+            <li><a href="#section2">ABOUT</a></li>
+            <li><a href="#section3">PROJECT</a></li>
+            <li><a href="#section4">CONTACT</a></li>
+        </ul>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+    <script>
+        function toggleNav() {
+            var navUl = document.querySelector('nav ul');
+            navUl.classList.toggle('show');
+        }
+
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+
+                // Close the navigation menu on smaller screens
+                if (window.innerWidth <= 600) {
+                    toggleNav();
+                }
+            });
+        });
+    </script>
+
+
+    <script>
+        function zoomEffect(event, content) {
+            const rect = content.getBoundingClientRect();
+
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const offsetX = (mouseX - centerX) / centerX;
+            const offsetY = (mouseY - centerY) / centerY;
+
+            const scale = 1.1;
+
+            content.style.transform = `scale(${scale}) translate(${offsetX * 10}px, ${offsetY * 10}px)`;
+        }
+
+        function resetZoom(content) {
+            content.style.transform = 'scale(1) translate(0, 0)';
+        }
+    </script>
+
+
+    <script>
+        function flipCard(card) {
+            card.classList.add("hover");
+        }
+
+        function unflipCard(card) {
+            card.classList.remove("hover");
+        }
+    </script>
+
+
+    <script>
+        function submitForm() {
+            // Get form data
+            var name = document.getElementById('name').value;
+            var phone = document.getElementById('phone').value;
+            var purpose = document.getElementById('purpose').value;
+
+            // Prepare message for WhatsApp
+            var whatsappMessage = "New contact form submission\nName: " + name + "\nPhone: " + phone + "\nPurpose: " + purpose;
+
+            // Assuming you have a WhatsApp API to send messages, replace the URL with your actual API endpoint
+            var whatsappApiUrl = "https://api.whatsapp.com/send?phone=9122878369&text=" + encodeURIComponent(whatsappMessage);
+
+            // Open WhatsApp in a new tab with the pre-filled message
+            window.open(whatsappApiUrl, '_blank');
+
+            // You can also handle form data submission to your server here
+            // For example, using AJAX to send data to your backend
+            // ...
+
+            // Reset the form
+            document.getElementById('contactForm').reset();
+        }
+    </script>
+
+
+</body>
+
+</html>
